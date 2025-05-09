@@ -1,0 +1,12 @@
+.titulo {
+  color: var(--vinoOsc);
+  font-weight: 600;
+  margin: 0;
+  font-size: 3rem;
+}
+
+.tituloSpan {
+  color: var(--doradoOsc);
+  font-weight: 500;
+  font-style: italic;
+}

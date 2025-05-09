@@ -1,0 +1,326 @@
+:root {
+  --doradoOsc: #bc955b;
+  --doradoClr: #DEC9A3;
+  --vinoOsc: #691B32;
+  --vinoClr: #A02142;
+  --grisOsc: #707271;
+  --grisClr: #98989a;
+  --blanco: #F5F3F5;
+}
+
+.dashboard-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  position: relative;
+  width: 60px;
+  border-radius: 0 25px 25px 0px;
+  background: var(--vinoClr);
+  backdrop-filter: blur(10px);
+  transition: width 0.6s, background-color 0.5s ease;
+  overflow-x: hidden;
+}
+
+.sidebar.active {
+  width: 200px;
+}
+
+.sidebar.active .icon svg {
+  width: 45px;
+  height: 45px;
+}
+
+.sidebar .toggle {
+  margin: 10px 0 0 8px;
+  width: 40px;
+  height: 40px;
+  background: var(--blanco);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sidebar .toggle.active {
+  background: var(--doradoOsc);
+}
+
+.sidebar .list {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  padding: 40px 0 0 5px;
+}
+
+.sidebar .list .list-item {
+  position: relative;
+  list-style: none;
+  width: 100%;
+  border-radius: 25px 0 0 25px;
+}
+
+.sidebar .list .list-item.active {
+  background: #f4f4f4;
+}
+
+.sidebar .list .list-item:hover,
+.sidebar .list .list-item:hover b:nth-child(1),
+.sidebar .list .list-item:hover b:nth-child(2) {
+  background: #fafafa69;
+  z-index: 100;
+}
+
+.sidebar .list .list-item b:nth-child(1) {
+  position: absolute;
+  top: -20px;
+  height: 20px;
+  left: calc(100% - 19.02px);
+  min-width: 19.02px;
+  width: 10%;
+  background: #f4f4f4;
+  display: none;
+}
+
+.sidebar .list .list-item b:nth-child(1)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-bottom-right-radius: 20px;
+  background: var(--vinoClr);
+}
+
+.sidebar .list .list-item b:nth-child(2) {
+  position: absolute;
+  bottom: -20px;
+  height: 20px;
+  left: calc(100% - 19.02px);
+  width: 10%;
+  min-width: 19.02px;
+  background: #f4f4f4;
+  display: none;
+}
+
+.sidebar .list .list-item b:nth-child(2)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-top-right-radius: 20px;
+  background: var(--vinoClr);
+}
+
+.sidebar .list .list-item.active b:nth-child(1),
+.sidebar .list .list-item.active b:nth-child(2) {
+  display: block;
+}
+
+.sidebar .list .list-item.active .list-item-link {
+  color: #691b32;
+  font-weight: 600;
+}
+
+.sidebar .list .list-item:hover .list-item-link {
+  color: var(--blanco);
+  font-weight: 600;
+}
+
+.sidebar .list .list-item .list-item-link {
+  position: relative;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  text-decoration: none;
+  color: var(--blanco);
+}
+
+.sidebar .list .list-item .list-item-link .icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  width: 50px;
+  height: 50px;
+  line-height: 60px;
+  padding: 10px;
+}
+
+.icon-svg .d {
+  fill: var(--blanco);
+  transition: fill 0.3s ease;
+}
+
+.sidebar .list .list-item.active .icon-svg .d {
+  fill: var(--vinoOsc);
+}
+
+.sidebar .list .list-item.active .icon-svg {
+  scale: 1.2;
+}
+
+.sidebar .list .list-item:hover .icon-svg .d {
+  fill: var(--blanco);
+}
+
+.icon svg {
+  width: 25px;
+  height: 25px;
+  transition: 0.8s linear;
+}
+
+/* .wrapper {
+  display: flex;
+  flex-direction: column;
+} */
+
+
+.sidebar .list .list-item .list-item-link .title {
+  padding-left: 10px;
+  height: 60px;
+  line-height: 60px;
+  white-space: normal;
+  display: block;
+}
+
+.sidebar .list .list-item .list-item-link .sub-title {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  color: var(--blanco);
+  padding-left: 10px;
+  font-size: 0.5rem;
+  z-index: 1000;
+}
+
+
+
+.sidebar-card {
+  position: fixed;
+  bottom: 20px;
+  width: calc(100% - 20px);
+  height: 200px;
+  margin: 0 10px;
+  background: rgba(245, 245, 245, 0.3);
+  border-radius: 25px;
+  border: 2.2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 11px 7px 30px 0px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sidebar-card .sidebarCardImg {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  position: relative;
+  top: -20px;
+  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.5));
+  transition: 0.7s ease-in-out;
+}
+
+.sidebar-card .sidebarCardImg img{
+  width: 80%;
+  height: auto;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.sidebar-card .sidebarCardImg img:hover {
+  filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.5));
+  transform: scale(1.05) translateY(-10px); 
+}
+
+.sidebar-card button {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: auto;
+  padding: 10px 5px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: var(--vinoClr);
+  color: var(--blanco);
+  font-weight: 500;
+  transition: 0.4s ease-in-out;
+}
+
+
+.sidebar-card button:hover {
+  scale: 1.1;
+  background-color: var(--blanco);
+  color: var(--vinoClr);
+}
+
+.sidebar-card button .icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 25px;
+}
+
+.sidebar.active  .sidebar-card button .icon {
+  margin-right: 10px;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+  flex: 1;
+  margin: 20px 10px 10px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dashboard-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb {
+  background-color: rgba(152, 152, 154, 0.3);
+  border-radius: 20px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb:hover {
+  background-color: var(--grisClr);
+}
+
+.dashboard-container::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* .header {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+.search-bar {
+  width: 100vw;
+  height: 50px;
+  padding: 10px;
+  border-radius: 40px;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content h1 {
+  font-size: 3rem;
+  color: var(--blanco);
+} */

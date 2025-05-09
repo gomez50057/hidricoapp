@@ -1,0 +1,377 @@
+.mapaConte {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+}
+
+.mapaTxt {
+  background: none;
+  justify-content: center;
+  width: 50vw;
+  padding: 30px;
+}
+
+.mapaTxt p {
+  text-align: justify;
+  font-size: 1.1rem;
+}
+
+#sidebar {
+  position: absolute;
+  z-index: 1000;
+  top: 0;
+  left: -300px;
+  bottom: 0;
+  width: 300px;
+  background: rgba(105, 27, 50, 0.6);
+  color: var(--blanco);
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+  border-right: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 4px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.9);
+  border-radius: 0 20px 20px 0;
+  transition: left 0.4s ease-in-out;
+}
+
+#sidebar.open {
+  left: 0;
+  /* Muestra el sidebar */
+}
+
+#toggleSidebar {
+  position: absolute;
+  z-index: 1010;
+  top: 87px;
+  left: 10px;
+  cursor: pointer;
+  background-color: #9f2241;
+  color: var(--blanco);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 15px;
+  transition: left 0.4s ease-in-out;
+}
+
+#toggleSidebar.open {
+  left: 320px;
+}
+
+#fullscreenButton {
+  display: flex;
+  position: absolute;
+  top: 85px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 30px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  justify-content: center;
+}
+
+#fullscreenButton:hover {
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.municipio-dropdown{
+  display: flex;
+  flex-direction: column;
+}
+
+.municipio-dropdown input {
+  width: 100%;
+  height: auto;
+  padding: 12px 5px;
+  border-radius: 10px;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  #fullscreenButton {
+    top: 5px;
+    right: 5px;
+    font-size: 24px;
+    padding: 8px;
+  }
+}
+
+#map {
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  background-color: #007BFF;
+}
+
+.sidebar-title {
+  background-color: rgba(125, 28, 52, 0.8);
+  text-align: center;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 42px;
+  font-weight: 600;
+  color: var(--blanco);
+}
+
+@media (max-width: 600px) {
+  #sidebar {
+    padding: 10px;
+  }
+}
+
+
+/* Estilo general para el popup */
+.leaflet-popup-content-wrapper {
+  padding: 20px;
+  width: auto;
+  height: auto;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  background: rgba(245, 245, 245, 0.8);
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  border-left: 2px solid rgba(105, 27, 50, 0.6);
+  border-right: 2px solid rgba(105, 27, 50, 0.6);
+  border-top: 4px solid rgba(105, 27, 50, 0.6);
+  border-bottom: 4px solid rgba(105, 27, 50, 0.6);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6), 0 6px 20px rgba(0, 0, 0, 0.9);
+  border-radius: 40px 0 40px 0;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.popup-content {
+  width: 47vw;
+  height: auto;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  padding: 0;
+}
+
+.popup-project-name {
+  font-size: 18px;
+  color: #691B32;
+}
+
+.popup-label {
+  font-weight: bold;
+  color: #333;
+}
+
+.leaflet-popup-tip-container {
+  display: none;
+}
+
+.leaflet-popup-content a {
+  color: #007BFF;
+  text-decoration: underline;
+}
+
+
+@media (max-width: 600px) {
+  .leaflet-popup-content-wrapper {
+    width: 90vw;
+    border-radius: 20px;
+  }
+
+  .popup-content {
+    width: 87vw;
+  }
+
+  .popup-project-name {
+    font-size: 16px;
+  }
+}
+
+
+
+.PopupT {
+  text-align: center;
+  font-weight: 900;
+  margin-bottom: 4px;
+  border-radius: 10px;
+  color: #fff;
+  background-color: #9F2241;
+}
+
+.PopupSubT {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  color: #BC955B;
+}
+
+.PopText {
+  display: inline;
+}
+
+
+
+
+
+
+
+
+
+.dropdown {
+  margin: 10px 0;
+  position: relative;
+}
+
+.dropdown-toggle {
+  padding: 10px;
+  background: linear-gradient(145deg, #ffffff, #d4d4d4);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2), -5px -5px 15px rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: all 0.3s ease-in-out;
+}
+
+.dropdown-toggle:hover {
+  background: linear-gradient(145deg, #eaeaea, #ffffff);
+  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.1), inset -2px -2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3), -5px -5px 20px rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  transform: scale(1);
+  opacity: 1;
+}
+
+.dropdown-menu.glass-effect {
+  animation: glassEffect 0.5s ease forwards;
+}
+
+.dropdown-menu label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #000;
+  transition: color 0.2s ease;
+}
+
+.dropdown-menu label:hover {
+  color: #691b31;
+}
+
+.dropdown-menu input {
+  margin-right: 10px;
+}
+
+@keyframes glassEffect {
+  0% {
+      transform: scale(0.9);
+      opacity: 0;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 1;
+  }
+}
+
+
+
+
+/* Checkbox Container */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+/* Hide Default Checkbox */
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+/* Custom Checkbox Styles */
+.checkbox-container label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 3D Checkbox Box */
+.checkbox-container label::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(145deg, #e0e0e0, #c8c8c8);
+  border-radius: 6px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2), -4px -4px 8px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Check Mark */
+.checkbox-container label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  width: 10px;
+  height: 20px;
+  border-right: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Checked State */
+.checkbox-container input[type="checkbox"]:checked + label::before {
+  background: linear-gradient(145deg, #4caf50, #3e8e41);
+  box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.8);
+}
+
+.checkbox-container input[type="checkbox"]:checked + label::after {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+  opacity: 1;
+}
+
+/* Hover Effect */
+.checkbox-container label:hover::before {
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(255, 255, 255, 0.8);
+}

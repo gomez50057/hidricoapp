@@ -1,0 +1,192 @@
+/* --doradoOsc: #bc955b;
+--doradoClr: #DEC9A3;
+--vinoOsc: #691B32;
+--vinoClr: #A02142;
+--grisOsc: #707271;
+--grisClr: #98989a;
+--blanco: #F5F3F5; */
+
+/* Fondo general de la página */
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: rgba(241, 238, 238, 0.158);
+  backdrop-filter: blur(20px);
+  border-radius: 40px;
+  padding: 20px;
+  border: #cccccc62 4px solid;
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.10) inset;
+  color: var(--grisOsc);
+}
+
+/* Título centrado */
+.title {
+  text-align: center;
+  color: var(--vinoOsc);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.title span {
+  text-align: center;
+  color: var(--doradoClr);
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-style: italic;
+  text-shadow: 2px 2px 5px rgba(212, 211, 211, 0.5);
+}
+
+/* Contenedor del menú */
+.menu {
+  width: 100%;
+  padding: 20px;
+}
+
+.containerTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Elemento principal de cada comisión */
+.menuItem {
+  margin-bottom: 15px;
+}
+
+/* Encabezado de cada comisión */
+.menuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menuHeader:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Indicador circular al lado de las comisiones */
+.comisionImage {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  margin-right: 10px;
+  padding: 5px;
+  border: #cccccc62 1px solid;
+}
+
+.containerTitle img{
+  filter: drop-shadow(0 4px 6px  rgba(34, 34, 34, 0.2));
+}
+
+/* Flecha indicadora */
+.arrow {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid var(--grisClr);
+  border-bottom: 2px solid var(--grisClr);
+  transform: rotate(45deg);
+  transition: transform 0.5s ease;
+}
+
+.arrow.open {
+  transform: rotate(-135deg);
+}
+
+/* Submenú desplegable */
+.subMenu {
+  list-style: none;
+  padding: 0 20px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  border-left: 7px var(--vinoClr) solid;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  max-height: 0; /* Inicialmente oculto */
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.5s ease;
+}
+
+/* Submenú abierto */
+.subMenu.open {
+  max-height: 300px; /* Tamaño máximo del submenú */
+  padding: 15px 20px;
+}
+
+
+/* Elemento de cada acuerdo */
+.acuerdo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.acuerdo:last-child {
+  border-bottom: none;
+}
+
+.acuerdo:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+/* Información de cada acuerdo */
+.acuerdoInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Nombre del acuerdo */
+.nombre {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--grisOsc);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Fecha del acuerdo */
+.fecha {
+  font-size: 0.9rem;
+  color: var(--grisClr);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de íconos */
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+/* Enlaces de íconos */
+.iconLink {
+  color: var(--doradoClr);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.iconLink:hover {
+  color: var(--doradoOsc);
+  transform: scale(1.2);
+}
+
+/* Estilo de los íconos */
+.icon {
+  font-size: 1.5rem;
+}

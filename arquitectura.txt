@@ -1,0 +1,36 @@
+plan-hidrico-metropolitano/
+├── public/
+│   └── img/                    # Imágenes estáticas (logos, ilustraciones, etc.)
+├── src/
+│   ├── app/                    # App router base de Next.js
+│   │   ├── layout.js           # Layout raíz con Navbar/Footer global
+│   │   ├── page.js             # Página inicial (Landing page)
+│   │   ├── training/           # Página de Capacitación
+│   │   │   └── page.js
+│   │   ├── knowledge/          # Página de Conocimiento al servicio del pueblo
+│   │   │   └── page.js
+│   ├── components/             # Componentes reutilizables y secciones
+│   │   ├── shared/             # Componentes compartidos (Navbar, Footer, SectionTitle, etc.)
+│   │   │   ├── Navbar.js
+│   │   │   ├── Footer.js
+│   │   │   ├── SectionTitle.js
+│   │   ├── landing/            # Secciones de la landing page
+│   │   │   ├── HeroSection.js
+│   │   │   ├── AboutSection.js
+│   │   │   ├── ObjectivesSection.js
+│   │   │   ├── JustificationSection.js
+│   │   │   ├── MapSection.js
+│   │   │   ├── PublicKnowledgeSection.js
+│   │   │   ├── TrainingSection.js
+│   │   ├── training/
+│   │   ├── knowledge/
+│   ├── styles/
+│   │   ├── globals.css         # Estilos globales
+│   │   ├── variables.module.css# Variables CSS (colores, tipografías, etc.)
+│   │   ├── landing.module.css  # Estilos específicos para la landing
+│   │   └── shared/             # Estilos por componente compartido
+│   │       ├── navbar.module.css
+│   │       └── footer.module.css
+├── .eslintrc.json              # Linter
+├── next.config.js              # Configuración de Next.js
+└── package.json

@@ -1,0 +1,258 @@
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #0056b3;
+  --error-color: #ff0000;
+  --background-color: rgba(255, 255, 255, 0.25);
+  --border-color: rgba(209, 213, 219, 0.3);
+  --box-shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: var(doradoClr);
+}
+
+
+.error-message {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.dropzone {
+  padding: 20px;
+  border: 3.6px dashed #691b3269;
+  min-height: 320px;
+  border-radius: 10px;
+  background-color: #f4f4f9;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.dropzone:hover {
+  background-color: #d6d6d68d;
+}
+
+.dropzone img {
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+.dropzone p {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--grisClr);
+  margin: 0;
+}
+
+.dropzone p:last-child {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.dropzone .highlight {
+  color: var(--vinoOsc);
+  text-decoration: none;
+}
+
+.dropzone .highlight:hover {
+  text-decoration: underline;
+}
+
+.file-preview {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.file-preview-item {
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  background-color: #f5f5f5;
+  width: 150px;
+}
+
+.file-preview-item img {
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.progress-bar .progress {
+  height: 100%;
+  background-color: var(--primary-color);
+  transition: width 0.3s;
+}
+
+.checkmark-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkmark {
+  width: 32px;
+  height: 32px;
+  stroke: #4caf50;
+  stroke-width: 5px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  animation: checkmark-draw 0.5s ease-in-out forwards;
+}
+
+@keyframes checkmark-draw {
+  0% {
+    stroke-dasharray: 50px 50px;
+    stroke-dashoffset: 50px;
+  }
+
+  100% {
+    stroke-dasharray: 50px 50px;
+    stroke-dashoffset: 0;
+  }
+}
+
+.file-details {
+  margin-top: 10px;
+}
+
+.file-details p {
+  font-size: 0.8rem;
+  margin: 5px 0;
+}
+
+.file-details button {
+  background-color: var(--error-color);
+  color: #fff;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-details button:hover {
+  background-color: #d40000;
+}
+
+.submit-button {
+  background: linear-gradient(to right, #a02142, #92203e, #841e3b, #761d36, #691b32);
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-button:hover {
+  background: linear-gradient(to right, #a7193f, #7c0d2b, #5b1126, #4b0c1e, #380716);
+  transform: scale(1.05);
+}
+
+.submit-button:active {
+  transform: scale(0.95);
+}
+
+
+.file-details {
+  margin-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  position: relative;
+}
+
+.file-details p {
+  font-size: 0.8rem;
+  margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.file-details p:hover {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: initial;
+  max-width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 10;
+}
+
+.file-details button {
+  background-color: var(--error-color);
+  color: #fff;
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 5px;
+
+}
+
+.file-details button:hover {
+  background-color: #d40000;
+}
+
+
+.titulosForm {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.titulosForm h3 {
+  width: auto;
+  color: var(--vinoOsc);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/*  */
+/*  */
+/*  */
+
+.edit-formulario,
+.update-formulario {
+  width: 95vw; 
+  max-width: 100%; 
+  height: auto; 
+  max-height: 85%; 
+  overflow-y: auto; 
+  padding: 15px; 
+}

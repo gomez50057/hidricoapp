@@ -1,0 +1,129 @@
+.aboutContainer {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: auto;
+  padding: 50px 20px;
+  gap: 20px;
+}
+
+.maskOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: black;
+  width: 0%;
+  z-index: 10;
+  pointer-events: none;
+  transition: width 0.2s ease-out;
+}
+
+.aboutTxt {
+  width: 60vw;
+  height: auto;
+  padding-right: 2vw;
+}
+
+.aboutImg {
+  width: 40vw;
+  border-radius: 20px;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.aboutImg img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transform-style: preserve-3d;
+
+  transform: rotateX(8deg) rotateY(-12deg) translateZ(0);
+  transition: transform 0.6s cubic-bezier(.17, .67, .83, .67),
+    box-shadow 0.6s ease,
+    filter 0.6s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  filter: brightness(0.95);
+}
+
+.aboutContainer:hover img {
+  transform: rotateX(0deg) rotateY(0deg) translateZ(60px) scale(1.03);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  filter: brightness(1.05);
+}
+
+/* 
+.aboutTxt {
+  width: 60vw;
+  height: auto;
+  padding-right: 2.5vw;
+} */
+
+.aboutContainer p {
+  text-align: justify;
+}
+
+.aboutContainer h3,
+.aboutContainer h2 {
+  margin: 5px 0;
+}
+
+.aboutContainer h3 {
+  color: var(--grisClr);
+}
+
+.tren {
+  width: 100vw;
+  height: 150px;
+  background: url('/img/vias.png') no-repeat bottom;
+  background-size: 100% auto;
+  position: relative;
+}
+
+/* Tamaño para 'lg' */
+@media (max-width: 768px) {
+  .aboutContainer {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .aboutImg,
+  .aboutTxt {
+    width: 90vw;
+  }
+
+  .aboutImg {
+    height: 100px;
+  }
+}
+
+/* Tamaño para 'md' */
+/* @media (min-width: 576px) {
+  .aboutContainer {
+    background-color: lightblue;
+    flex-direction: column;
+
+  }
+} */
+
+/* Tamaño para 'lg' */
+/* @media (min-width: 768px) {
+  .aboutContainer {
+    background-color: lightgreen;
+
+  }
+} */
+
+/* Tamaño para 'xl' */
+/* @media (min-width: 1024px) {
+  .dualContainer {
+    background-color: lightcoral;
+  }
+} */
+
+/* Tamaño para 'xxl' */
+@media (min-width: 1400px) {
+  /* .dualContainer {
+    background-color: lightgoldenrodyellow;
+  } */
+}

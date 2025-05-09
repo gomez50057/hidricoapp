@@ -1,0 +1,56 @@
+.detailWrapper {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.detailSection {
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--doradoOsc);
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 0.25rem;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.detailItem {
+  background: #fff;
+  padding: 0.5rem;
+  border: 1px solid var(--grisClr);
+  border-radius: 30px;
+}
+
+.detailItem p{
+  margin: 0;
+}
+
+.detailItem a{
+  display: block;
+}
+
+.detailLabel {
+  font-weight: bold;
+  color: var(--grisOsc);
+}
+
+.detailValue {
+  color: var(--grisClr);
+}
+
+.firmaImg {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}

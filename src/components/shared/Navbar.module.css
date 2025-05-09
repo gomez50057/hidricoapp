@@ -1,0 +1,147 @@
+.Navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  transition: top 0.3s ease-in-out, backdrop-filter 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.NavbarList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90vw;
+  padding: 2px 10px;
+  margin: 10px 0;
+  background-color: hsla(240, 33%, 96%, 0.81);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(3px);
+  border-radius: 100vw;
+}
+
+.NavbarImg,
+.NavbarInicio,
+.navbarOpc {
+  display: flex;
+  align-items: center;
+}
+
+.NavbarImg img {
+  height: 30px;
+  margin: 0 5px;
+}
+
+.navbarOpc {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navbarOpc li {
+  margin: 0 10px;
+  position: relative;
+}
+
+.navbarOpc li a {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--vinoOsc);
+  transition: color 0.3s, text-decoration 0.3s;
+}
+
+.navbarOpc li a:hover {
+  color: var(--vinoClr);
+  text-decoration: underline;
+}
+
+.dropdownToggle {
+  padding: 14px 16px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--vinoOsc);
+  cursor: pointer;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: hsla(240, 33%, 96%, 0.95);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0.5rem;
+  z-index: 2000;
+  min-width: 150px;
+}
+
+.dropdownMenu li a {
+  display: block;
+  text-align: left;
+  padding: 10px 16px;
+  font-size: 1rem;
+  color: var(--vinoOsc);
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.dropdownMenu li a:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+}
+
+.NavbarCirculo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--blanco);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 6px 20px rgba(0, 0, 0, 0.19);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.NavbarCirculo img {
+  width: 90%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.NavbarCirculo:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 14px 28px rgba(0, 0, 0, 0.25);
+}
+
+.active {
+  top: 0;
+}
+
+.hidden {
+  top: -150px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbarOpc li {
+    margin: 0;
+  }
+
+  .NavbarInicio .navbarOpc {
+    display: none;
+  }
+
+  .NavbarImg img {
+    width: 30vw;
+    height: auto;
+  }
+}
