@@ -10,38 +10,22 @@ import { identificacionOpciones, nivelesOpciones, gradoPendienteOpciones, profun
 import { validationSchemaEvaluador } from './validationSchema';
 import NivelacionDetalle from './componentsForm/NivelacionDetalle';
 
-
 const FormularioNivelacionEvaluador = () => {
-  const [nivelaciones, setNivelaciones] = useState([]);
   const [isModalOpenEvaluador, setIsModalOpenEvaluador] = useState(false);
   const [preSelectedFolio, setPreSelectedFolio] = useState('');
   const [updatedFolio, setUpdatedFolio] = useState('');
 
-  useEffect(() => {
-    axios.get('/api/formularios/', {
-      withCredentials: true,         // envía access_token en cookie HTTP-Only
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(res => {
-        setNivelaciones(res.data);
-      })
-      .catch(err => {
-        console.error('Error cargando nivelaciones:', err);
-      });
-  }, []);
-
-  // Al montar el componente, obtenemos el folio guardado en localStorage (si existe)
+  // Obtener folio preseleccionado desde localStorage
   useEffect(() => {
     const storedFolio = localStorage.getItem('selectedFolio');
     if (storedFolio) {
       setPreSelectedFolio(storedFolio);
-      // Opcional: removerlo si solo se quiere usar una vez
       localStorage.removeItem('selectedFolio');
     }
   }, []);
 
   const initialValues = {
-    nivelacion: preSelectedFolio, // Campo precargado con el folio si existe
+    nivelacion: preSelectedFolio,
     area_atencion_prioritaria: '',
     convenio_colaboracion_pnh: '',
     pendiente_promedio: '',
@@ -63,22 +47,22 @@ const FormularioNivelacionEvaluador = () => {
 
   const handleSubmit = async (values, { resetForm }) => {
     console.log('🚀 Entrando a handleSubmit con valores:', values);
+
+    if (!values.nivelacion) {
+      alert('Error: No se encontró el folio seleccionado.');
+      return;
+    }
+
+    const csrfToken = getCSRFToken();
+
+    const payload = {
+      ...values,
+      nivelacion: values.nivelacion,  // Enviar directamente el folio
+    };
+
+    console.log('Payload enviado:', payload);
+
     try {
-      const csrfToken = getCSRFToken();
-      const selectedNivelacion = nivelaciones.find(n => n.folio === values.nivelacion);
-
-      if (!selectedNivelacion) {
-        alert('Error: No se encontró el folio seleccionado.');
-        return;
-      }
-
-      const payload = {
-        ...values,
-        nivelacion: selectedNivelacion.folio,  // Enviar el folio directamente si así lo requiere el backend
-      };
-
-      console.log('Payload enviado:', payload);
-
       const response = await axios.post('/api/archivos/', payload, {
         withCredentials: true,
         headers: {
@@ -87,17 +71,17 @@ const FormularioNivelacionEvaluador = () => {
         },
       });
 
-      const folio = response.data.folio;
-      setUpdatedFolio(folio);
+      setUpdatedFolio(response.data.folio);
       setIsModalOpenEvaluador(true);
       resetForm();
     } catch (error) {
       console.error('📛 Error al enviar el formulario evaluador:', error);
-      if (error.response && error.response.data) {
+      if (error.response?.data) {
         console.error('Detalles del error del servidor:', error.response.data);
         alert(`Error: ${JSON.stringify(error.response.data)}`);
+      } else {
+        alert('Ocurrió un error al enviar el formulario.');
       }
-      alert('Ocurrió un error al enviar el formulario.');
     }
   };
 
@@ -117,9 +101,14 @@ const FormularioNivelacionEvaluador = () => {
           <>
             <NivelacionDetalle folio={values.nivelacion} />
             <Form className={styles.formWrapper}>
-              <h1><span>Cedula</span> de <span className="spanDoarado">evolución y dictamen</span></h1>
+              <h1><span>Cédula</span> de <span className="spanDoarado">evaluación y dictamen</span></h1>
+              
               <div className={styles.formGroup}>
-                <h3 className={styles.inputField}>{`Cédula registro de solicitud del candidato (${preSelectedFolio})` }</h3>
+                <h3 className={styles.inputField}>
+                  {preSelectedFolio
+                    ? `Cédula registro de solicitud del candidato (${preSelectedFolio})`
+                    : 'No hay folio seleccionado'}
+                </h3>
                 <Field type="hidden" name="nivelacion" value={preSelectedFolio} />
                 <ErrorMessage name="nivelacion" component="div" className={styles.errorMessage} />
               </div>
@@ -252,14 +241,14 @@ const FormularioNivelacionEvaluador = () => {
               </div>
             </Form>
           </>
-
         )}
       </Formik>
+
       <AgreementSuccessModal
         isOpen={isModalOpenEvaluador}
         folio={updatedFolio}
         estado="Guardado"
-        mensaje="Cedula de evolución y dictamen guardada con éxito"
+        mensaje="Cédula de evaluación y dictamen guardada con éxito"
         labelFolio=""
         labelGuardar=""
         handleClose={handleCloseModal}
