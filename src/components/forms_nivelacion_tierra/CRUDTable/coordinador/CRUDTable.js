@@ -15,6 +15,8 @@ import {
   Box,
 } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import Tooltip from '@mui/material/Tooltip';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { mkConfig, generateCsv, download } from 'export-to-csv';
 import axios from 'axios';
 import ProjectModal from '../ProjectModal';
@@ -67,6 +69,9 @@ const CRUDTable = () => {
     columnHelper.accessor('fecha', {
       header: 'Fecha',
     }),
+    columnHelper.accessor('resolucion', {
+      header: 'Resolución',
+    }),
     // Se crea una columna que concatena nombre, apellido_paterno y apellido_materno
     columnHelper.accessor(
       row => `${row.nombre} ${row.apellido_paterno} ${row.apellido_materno}`,
@@ -91,24 +96,33 @@ const CRUDTable = () => {
       enableSorting: false,
       enableColumnPinning: true,
       Cell: ({ row }) => {
-        const { id, folio } = row.original;
+        const { id, folio, resolucion } = row.original;
+
         return (
           <Box display="flex" gap={1} className="Acciones-con">
-            <Button
-              variant="outlined"
-              className="crud-button"
-              // Se pasa el folio seleccionado junto con el id
-              onClick={() => handleAction('evaluador', id, folio)}
-            >
-              Evaluar
-            </Button>
-            <Button
-              variant="outlined"
-              className="crud-button"
-              onClick={() => window.open('/report', '_blank')}
-            >
-              Reporte
-            </Button>
+            {resolucion === 'Registrada' ? (
+              <Button
+                variant="outlined"
+                className="crud-button"
+                onClick={() => handleAction('evaluador', id, folio)}
+              >
+                Evaluar
+              </Button>
+            ) : (
+              <Tooltip title={`Ya revisado: ${resolucion}`}>
+                <CheckCircleIcon color="success" />
+              </Tooltip>
+            )}
+
+            {(resolucion === 'Positiva' || resolucion === 'Negativa') && (
+              <Button
+                variant="outlined"
+                className="crud-button"
+                onClick={() => window.open('/planhidrico/report', '_blank')}
+              >
+                Reporte
+              </Button>
+            )}
           </Box>
         );
       },
