@@ -110,3 +110,31 @@
 .button:hover {
   background-color: var(--vinoClr);
 }
+
+
+.login {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* @media (max-width: 768px) { */
+@media (max-width: 1080px) {
+
+  .login {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .imgInicio {
+    width: 65%;
+    margin-top: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .containerInicioSeccion{
+    padding: 0 20px 0 20px;
+  }
+}

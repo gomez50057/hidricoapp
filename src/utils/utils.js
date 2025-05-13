@@ -77,14 +77,19 @@ export const nivelesOpciones = [
 ];
 
 export const gradoPendienteOpciones = [
-  { value: 'menor_4', label: 'Menor a 4%' },
-  { value: 'mayor_4', label: 'Mayor a 4%' },
+  { value: 'alta mayor a 4', label: 'Alta mayor a 4%' },
+  { value: 'media entre 2 y 4', label: 'Media entre a 2% y 4%' },
+  { value: 'baja menor 2', label: 'Baja menor a 2%' },
 ];
 
 export const profundidadSueloOpciones = [
-  { value: 'menor_40', label: 'Menor a 40 cm' },
-  { value: 'entre_40_50', label: 'Entre 40 y 50 cm' },
-  { value: 'mayor_50', label: 'Mayor a 50 cm' }
+  { value: 'menor 40', label: 'Menor a 40 cm' },
+  { value: 'mayor 40', label: 'Mayor a 40 cm' }
+];
+
+export const profundidadSueloPedregosidad = [
+  { value: 'menor 40', label: 'Menor a 40 cm' },
+  { value: 'mayor 40', label: 'Mayor a 40 cm' }
 ];
 
 export const tipoRevestimientoOpciones = [
@@ -93,8 +98,8 @@ export const tipoRevestimientoOpciones = [
 ];
 
 export const gastoCanalesOpciones = [
-  { value: 'medio_rango', label: 'Medio rango' },
-  { value: 'gasto_completo', label: 'Gasto completo' }
+  { value: 'medio riego', label: 'Medio riego' },
+  { value: 'gasto completo', label: 'Gasto completo' }
 ];
 
 export const tipoSeccionOpciones = [
@@ -119,11 +124,6 @@ export const pendientePromedio = [
   'mayor de 4',
 ];
 
-export const profundidadSueloPedregosidad = [
-  'mayor a 40 cm',
-  'menor igual a 40 cm',
-];
-
 export const tipoSuelo = [
   'Arcilloso',
   'Arenoso',
@@ -133,6 +133,4 @@ export const tipoSuelo = [
 export const resolucionOpciones = [
   'Positiva',
   'Negativa',
-  'Devolver',
-  'Registrado',
 ];
