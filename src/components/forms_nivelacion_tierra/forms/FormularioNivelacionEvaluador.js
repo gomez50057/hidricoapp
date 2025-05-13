@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import axios from 'axios';
 import FirmaDigital from './componentsForm/FirmaDigital';
 import styles from './FormNivelacion.module.css';
 import AgreementSuccessModal from './AgreementSuccessModal';
-import { identificacionOpciones, nivelesOpciones, pendientePromedio, profundidadSueloPedregosidad, resolucionOpciones, tipoSuelo } from '@/utils/utils';
+import { identificacionOpciones, nivelesOpciones, gradoPendienteOpciones, profundidadSueloPedregosidad, resolucionOpciones, tipoSuelo } from '@/utils/utils';
+import { validationSchemaEvaluador } from './validationSchema';
 import NivelacionDetalle from './componentsForm/NivelacionDetalle';
 
 
@@ -56,22 +56,6 @@ const FormularioNivelacionEvaluador = () => {
     firma_digital: '',
   };
 
-  const validationSchema = Yup.object({
-    nivelacion: Yup.string().required('Campo obligatorio'),
-    area_atencion_prioritaria: Yup.string().required('Campo obligatorio'),
-    convenio_colaboracion_pnh: Yup.string().required('Campo obligatorio'),
-    pendiente_promedio: Yup.string().required('Campo obligatorio'),
-    volumen_agua_anual: Yup.number().positive('Debe ser un número positivo').required('Campo obligatorio'),
-    profundidad_suelo_pedregosidad: Yup.string().required('Campo obligatorio'),
-    nivel_pedregosidad: Yup.string().required('Campo obligatorio'),
-    acreditacion_propiedad: Yup.string().required('Campo obligatorio'),
-    constancia_curso: Yup.string().required('Campo obligatorio'),
-    tipo_suelo: Yup.string().required('Campo obligatorio'),
-    resolucion: Yup.string().required('Campo obligatorio'),
-    nombre_revisor: Yup.string().required('Campo obligatorio'),
-    firma_digital: Yup.string().required('Firma requerida'),
-  });
-
   const getCSRFToken = () => {
     const match = document.cookie.match(/csrftoken=([^;]+)/);
     return match ? match[1] : null;
@@ -80,26 +64,39 @@ const FormularioNivelacionEvaluador = () => {
   const handleSubmit = async (values, { resetForm }) => {
     console.log('🚀 Entrando a handleSubmit con valores:', values);
     try {
-      const csrfToken = getCSRFToken(); // Token explícito
-  
-      const response = await axios.post(
-        '/api/archivos/',
-        values,
-        {
-          withCredentials: true,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken,
-          },
-        }
-      );
-  
+      const csrfToken = getCSRFToken();
+      const selectedNivelacion = nivelaciones.find(n => n.folio === values.nivelacion);
+
+      if (!selectedNivelacion) {
+        alert('Error: No se encontró el folio seleccionado.');
+        return;
+      }
+
+      const payload = {
+        ...values,
+        nivelacion: selectedNivelacion.folio,  // Enviar el folio directamente si así lo requiere el backend
+      };
+
+      console.log('Payload enviado:', payload);
+
+      const response = await axios.post('/api/archivos/', payload, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+        },
+      });
+
       const folio = response.data.folio;
       setUpdatedFolio(folio);
       setIsModalOpenEvaluador(true);
       resetForm();
     } catch (error) {
       console.error('📛 Error al enviar el formulario evaluador:', error);
+      if (error.response && error.response.data) {
+        console.error('Detalles del error del servidor:', error.response.data);
+        alert(`Error: ${JSON.stringify(error.response.data)}`);
+      }
       alert('Ocurrió un error al enviar el formulario.');
     }
   };
@@ -112,7 +109,7 @@ const FormularioNivelacionEvaluador = () => {
     <>
       <Formik
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        validationSchema={validationSchemaEvaluador}
         onSubmit={handleSubmit}
         enableReinitialize // Permite que initialValues se actualicen al cambiar preSelectedFolio
       >
@@ -120,16 +117,10 @@ const FormularioNivelacionEvaluador = () => {
           <>
             <NivelacionDetalle folio={values.nivelacion} />
             <Form className={styles.formWrapper}>
+              <h1><span>Cedula</span> de <span className="spanDoarado">evolución y dictamen</span></h1>
               <div className={styles.formGroup}>
-                <label>Selecciona el formulario de nivelación</label>
-                <Field as="select" name="nivelacion" className={styles.inputField}>
-                  <option value="">Seleccione</option>
-                  {nivelaciones.map(niv => (
-                    <option key={niv.id} value={niv.folio}>
-                      {niv.folio}
-                    </option>
-                  ))}
-                </Field>
+                <h3 className={styles.inputField}>{`Cédula registro de solicitud del candidato (${preSelectedFolio})` }</h3>
+                <Field type="hidden" name="nivelacion" value={preSelectedFolio} />
                 <ErrorMessage name="nivelacion" component="div" className={styles.errorMessage} />
               </div>
 
@@ -162,8 +153,8 @@ const FormularioNivelacionEvaluador = () => {
                   <label>Pendiente promedio</label>
                   <Field as="select" name="pendiente_promedio" className={styles.inputField}>
                     <option value="">Seleccione</option>
-                    {pendientePromedio.map(opt => (
-                      <option key={opt} value={opt}>{opt}</option>
+                    {gradoPendienteOpciones.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                   </Field>
                   <ErrorMessage name="pendiente_promedio" component="div" className={styles.errorMessage} />
@@ -178,11 +169,11 @@ const FormularioNivelacionEvaluador = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label>Profundidad de suelo y pedregosidad</label>
+                  <label>Profundidad de suelo</label>
                   <Field as="select" name="profundidad_suelo_pedregosidad" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {profundidadSueloPedregosidad.map(opt => (
-                      <option key={opt} value={opt}>{opt}</option>
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
                     ))}
                   </Field>
                   <ErrorMessage name="profundidad_suelo_pedregosidad" component="div" className={styles.errorMessage} />
@@ -267,8 +258,8 @@ const FormularioNivelacionEvaluador = () => {
       <AgreementSuccessModal
         isOpen={isModalOpenEvaluador}
         folio={updatedFolio}
-        estado="Actualizado"
-        mensaje="Formulario evaluador actualizado con éxito"
+        estado="Guardado"
+        mensaje="Cedula de evolución y dictamen guardada con éxito"
         labelFolio=""
         labelGuardar=""
         handleClose={handleCloseModal}
