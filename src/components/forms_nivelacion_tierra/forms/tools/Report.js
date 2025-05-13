@@ -2,18 +2,32 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useSearchParams } from 'next/navigation';
 import styles from './Report.module.css';
 
 const Report = () => {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [reportData, setReportData] = useState([]);
+  const searchParams = useSearchParams();
+  const folio = searchParams.get('folio');
+
+  const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/api/formularios/`)
+    if (!folio) {
+      setError('No se proporcionó un folio.');
+      setLoading(false);
+      return;
+    }
+
+    axios.get(`/api/formularios/?folio=${folio}`)
       .then(response => {
-        setReportData(response.data);
+        if (response.data.length > 0) {
+          setReportData(response.data[0]);
+        } else {
+          setError(`No se encontró el formulario con folio ${folio}`);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -21,11 +35,13 @@ const Report = () => {
         setError('Error al cargar los datos');
         setLoading(false);
       });
-  }, [apiUrl]);
+  }, [apiUrl, folio]);
 
   if (loading) return <div>Cargando datos...</div>;
   if (error) return <div>{error}</div>;
-  if (!reportData.length) return <div>No hay datos disponibles.</div>;
+  if (!reportData) return <div>No hay datos disponibles.</div>;
+
+  const item = reportData;
 
   return (
     <div className={styles.reportContainer}>
