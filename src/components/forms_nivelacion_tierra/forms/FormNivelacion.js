@@ -12,6 +12,7 @@ import styles from './FormNivelacion.module.css';
 import AgreementSuccessModal from './AgreementSuccessModal';
 import MapaUbicacion from './componentsForm/MapaUbicacion';
 import 'leaflet/dist/leaflet.css';
+import WarningIcon from '@mui/icons-material/Warning';
 
 import {
   municipiosDeHidalgo,
@@ -48,9 +49,9 @@ const FormUpdater = ({ setFieldValue, setModulosFiltrados }) => {
     if (!cultivosAnuales.includes(values.cultivo_actual)) {
       setFieldValue('fecha_libre_parcela', '');
     }
-    if (values.curso_sader === 'si') {
-      setFieldValue('cuando_toma_sader', 'No aplica');
-    }
+    // if (values.curso_sader === 'si') {
+    //   setFieldValue('cuando_toma_sader', 'No aplica');
+    // }
   }, [
     values.distrito_riego,
     values.ha_nivelado,
@@ -116,9 +117,10 @@ const FormNivelacion = () => {
     legal_propiedad_pdf: null,
     identificacion_pdf: null,
     comprobante_domicilio_pdf: null,
+    vale_riego_reciente_pdf: null,
     curso_sader: '',
     constancia_pdf: null,
-    cuando_toma_sader: '',
+    // cuando_toma_sader: '',
     firma_digital: '',
   };
 
@@ -162,15 +164,19 @@ const FormNivelacion = () => {
       .required('Debe cargar un archivo PDF')
       .test('fileFormat', 'Solo se permite PDF', (value) => value && value.type === 'application/pdf')
       .test('fileSize', 'El archivo debe ser menor o igual a 10 MB', (value) => value && value.size <= FILE_SIZE_LIMIT),
+    vale_riego_reciente_pdf: Yup.mixed()
+      .required('Debe cargar un archivo PDF')
+      .test('fileFormat', 'Solo se permite PDF', (value) => value && value.type === 'application/pdf')
+      .test('fileSize', 'El archivo debe ser menor o igual a 10 MB', (value) => value && value.size <= FILE_SIZE_LIMIT),
     curso_sader: Yup.string().required('Campo obligatorio'),
-    cuando_toma_sader: Yup.string().when('curso_sader', (curso_sader, schema) => {
-      if (curso_sader === 'no') {
-        return schema.required('Especifique cuándo lo tomará');
-      }
-      if (curso_sader === 'si') {
-        return schema.required('Carga la constancia');
-      }
-    }),
+    // cuando_toma_sader: Yup.string().when('curso_sader', (curso_sader, schema) => {
+    //   if (curso_sader === 'no') {
+    //     return schema.required('Especifique cuándo lo tomará');
+    //   }
+    //   if (curso_sader === 'si') {
+    //     return schema.required('Carga la constancia');
+    //   }
+    // }),
     constancia_pdf: Yup.mixed().when('curso_sader', {
       is: 'si',
       then: (schema) =>
@@ -197,6 +203,7 @@ const FormNivelacion = () => {
           key === 'legal_propiedad_pdf' ||
           key === 'identificacion_pdf' ||
           key === 'comprobante_domicilio_pdf' ||
+          key === 'vale_riego_reciente_pdf' ||
           key === 'constancia_pdf'
         ) {
           if (value instanceof File) {
@@ -247,6 +254,11 @@ const FormNivelacion = () => {
         {({ values, setFieldValue }) => (
           <>
             <Form>
+              <div className={styles.titulo}>
+                <h1><span>Programa</span> de <span className="spanDoarado">tecnificación de riego</span></h1>
+                <h2>Registro de solicitud al componte de <span className="spanvino">nivelación de tierras</span></h2>
+              </div>
+
               <SectionTitle title="Datos Personales" />
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
@@ -271,11 +283,6 @@ const FormNivelacion = () => {
                   <label htmlFor="curp">CURP:</label>
                   <Field name="curp" className={styles.inputField} />
                   <ErrorMessage name="curp" component="div" className={styles.errorMessage} />
-                </div>
-                <div className={styles.formGroup}>
-                  <label htmlFor="cuenta_conagua">No. cuenta CONAGUA:</label>
-                  <Field name="cuenta_conagua" className={styles.inputField} />
-                  <ErrorMessage name="cuenta_conagua" component="div" className={styles.errorMessage} />
                 </div>
               </div>
 
@@ -360,7 +367,12 @@ const FormNivelacion = () => {
                   <ErrorMessage name="superficie_parcela" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tiempo_promedio_riego">Tiempo promedio de riego (h):</label>
+                  <label htmlFor="cuenta_conagua">No. cuenta CONAGUA:</label>
+                  <Field name="cuenta_conagua" className={styles.inputField} />
+                  <ErrorMessage name="cuenta_conagua" component="div" className={styles.errorMessage} />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="tiempo_promedio_riego">Tiempo promedio de riego (parcela):</label>
                   <Field name="tiempo_promedio_riego" className={styles.inputField} />
                   <ErrorMessage name="tiempo_promedio_riego" component="div" className={styles.errorMessage} />
                 </div>
@@ -426,10 +438,10 @@ const FormNivelacion = () => {
                   <ErrorMessage name="profundidad_suelo" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tipo_revestimiento">Tipo de revestimiento de canaleta:</label>
+                  <label htmlFor="tipo_revestimiento">Canaleta revestida:</label>
                   <Field as="select" name="tipo_revestimiento" className={styles.inputField}>
                     <option value="">Seleccione</option>
-                    {tipoRevestimientoOpciones.map((opcion) => (
+                    {identificacionOpciones.map((opcion) => (
                       <option key={opcion.value} value={opcion.value}>
                         {opcion.label}
                       </option>
@@ -466,12 +478,12 @@ const FormNivelacion = () => {
                   <ErrorMessage name="gasto_canales" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="distancia_canaleta">Distancia de parcela a la canaleta (m):</label>
+                  <label htmlFor="distancia_canaleta">Distancia de parcela a la canaleta revestida (m):</label>
                   <Field name="distancia_canaleta" type="number" min="0" className={styles.inputField} />
                   <ErrorMessage name="distancia_canaleta" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tipo_seccion">Tipo de sección:</label>
+                  <label htmlFor="tipo_seccion">Tipo de sección de la canaleta:</label>
                   <Field as="select" name="tipo_seccion" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {tipoSeccionOpciones.map((opcion) => (
@@ -576,7 +588,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="acreditacion_propiedad">Acreditación de la posesión o legal propiedad del titular:</label>
+                  <label htmlFor="acreditacion_propiedad">¿Acredita la legal posesión o propiedad de la tierra?:</label>
                   <Field as="select" name="acreditacion_propiedad" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOpciones.map((opcion) => (
@@ -648,6 +660,21 @@ const FormNivelacion = () => {
                   />
                   <ErrorMessage name="comprobante_domicilio_pdf" component="div" className={styles.errorMessage} />
                 </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="vale_riego_reciente_pdf">Vale de riego reciente:</label>
+                  <input
+                    id="vale_riego_reciente_pdf"
+                    name="vale_riego_reciente_pdf"
+                    type="file"
+                    accept="application/pdf"
+                    onChange={(event) => {
+                      setFieldValue('vale_riego_reciente_pdf', event.currentTarget.files[0]);
+                    }}
+                    className={styles.inputField}
+                  />
+                  <ErrorMessage name="vale_riego_reciente_pdf" component="div" className={styles.errorMessage} />
+                </div>
               </div>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
@@ -662,11 +689,19 @@ const FormNivelacion = () => {
                   </Field>
                   <ErrorMessage name="curso_sader" component="div" className={styles.errorMessage} />
                 </div>
-                {values.curso_sader === 'no' && (
+                {/* {values.curso_sader === 'no' && (
                   <div className={styles.formGroup}>
                     <label htmlFor="cuando_toma_sader">¿Cuándo lo piensa tomar?</label>
                     <Field type="text" name="cuando_toma_sader" className={styles.inputField} />
                     <ErrorMessage name="cuando_toma_sader" component="div" className={styles.errorMessage} />
+                  </div>
+                )} */}
+                {values.curso_sader === 'no' && (
+                  <div className={styles.formGroup}>
+                    <p>
+                      Me comprometo previo a los trabajos de nivelación a presentar la constancia de participación del curso de
+                      capacitación sobre la importancia de la nivelación de tierras.
+                    </p>
                   </div>
                 )}
 
@@ -688,11 +723,16 @@ const FormNivelacion = () => {
                 )}
               </div>
               <FirmaDigital setFieldValue={setFieldValue} />
+              <p className={styles.alerta}>
+                <WarningIcon style={{ marginRight: '8px', verticalAlign: 'middle' }} />
+                Importante: La presentación de esta solicitud. no otorga el derecho a ser autorizada, ésta debe ser dictaminada previamente por el Comité Técnico, con base al procedimiento de selección establecido en los Lineamientos Técnicos.
+              </p>
               <div className={styles.formGroup}>
                 <button type="submit" className={styles.submitButton}>
                   Enviar Formulario
                 </button>
               </div>
+              <p className={styles.avisoPrivacidad}>Este programa es público, ajeno a cualquier partido político. Queda prohibido el uso para fines distintos a los establecidos en el programa</p>
             </Form>
             {/* Inyectamos el FormUpdater para actualizar campos de forma reactiva */}
             <FormUpdater setFieldValue={setFieldValue} setModulosFiltrados={setModulosFiltrados} />

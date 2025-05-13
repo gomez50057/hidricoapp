@@ -1,4 +1,18 @@
+.titulo h1{
+  margin: 0;
+}
 
+.alerta{
+  color: var(--vinoOsc);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.avisoPrivacidad{
+  color: var(--grisClr);
+  font-size: .8rem;
+  font-weight: 500;
+}
 
 .formularioContainer {
   width: 100%;

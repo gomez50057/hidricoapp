@@ -62,7 +62,6 @@ export default function NivelacionDetalle({ folio }) {
             ['Apellido paterno', detalle.apellido_paterno],
             ['Apellido materno', detalle.apellido_materno],
             ['CURP', detalle.curp],
-            ['Cuenta CONAGUA', detalle.cuenta_conagua],
             ['Domicilio', detalle.domicilio],
             ['Identificación', detalle.identificacion],
             ['Teléfono', detalle.telefono],
@@ -100,7 +99,11 @@ export default function NivelacionDetalle({ folio }) {
             <p className={styles.detailValue}>{detalle.superficie_parcela}</p>
           </div>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Tiempo promedio riego (h):</span>
+            <span className={styles.detailLabel}>No. cuenta CONAGUA:</span>
+            <p className={styles.detailValue}>{detalle.cuenta_conagua}</p>
+          </div>
+          <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Tiempo promedio de riego (parcela):</span>
             <p className={styles.detailValue}>{detalle.tiempo_promedio_riego}</p>
           </div>
           <div className={styles.detailItem}>
@@ -134,7 +137,7 @@ export default function NivelacionDetalle({ folio }) {
             <p className={styles.detailValue}>{detalle.tamano_canaleta_ancho} x {detalle.tamano_canaleta_alto} ancho-alto</p>
           </div>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Tipo revestimiento:</span>
+            <span className={styles.detailLabel}>canaleta revestida:</span>
             <p className={styles.detailValue}>{detalle.tipo_revestimiento}</p>
           </div>
           <div className={styles.detailItem}>
@@ -142,11 +145,11 @@ export default function NivelacionDetalle({ folio }) {
             <p className={styles.detailValue}>{detalle.gasto_canales}</p>
           </div>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Distancia canaleta (m):</span>
+            <span className={styles.detailLabel}>Distancia de parcela a la canaleta revestida (m):</span>
             <p className={styles.detailValue}>{detalle.distancia_canaleta}</p>
           </div>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Tipo de sección:</span>
+            <span className={styles.detailLabel}>Tipo de sección de la canaleta:</span>
             <p className={styles.detailValue}>{detalle.tipo_seccion}</p>
           </div>
           <div className={styles.detailItem}>
@@ -186,7 +189,7 @@ export default function NivelacionDetalle({ folio }) {
         <h3 className={styles.sectionTitle}>Documentos y capacitaciones</h3>
         <div className={styles.detailGrid}>
           <div className={styles.detailItem}>
-            <span className={styles.detailLabel}>Acreditación propiedad:</span>
+            <span className={styles.detailLabel}>¿Acredita la legal posesión o propiedad de la tierra?:</span>
             <p className={styles.detailValue}>{detalle.acreditacion_propiedad}</p>
           </div>
           <div className={styles.detailItem}>
@@ -212,13 +215,19 @@ export default function NivelacionDetalle({ folio }) {
             ) : 'N/A'}
           </div>
           <div className={styles.detailItem}>
+            <span className={styles.detailLabel}>Vale de riego reciente::</span>
+            {detalle.vale_riego_reciente_pdf ? (
+              <a href={detalle.vale_riego_reciente_pdf} target="_blank" rel="noopener noreferrer">Descargar</a>
+            ) : 'N/A'}
+          </div>
+          <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Curso SADER:</span>
             <p className={styles.detailValue}>{detalle.curso_sader}</p>
           </div>
-          <div className={styles.detailItem}>
+          {/* <div className={styles.detailItem}>
             <span className={styles.detailLabel}>¿Cuándo tomó SADER?:</span>
             <p className={styles.detailValue}>{detalle.cuando_toma_sader || 'N/A'}</p>
-          </div>
+          </div> */}
           <div className={styles.detailItem}>
             <span className={styles.detailLabel}>Constancia PDF:</span>
             {detalle.constancia_pdf ? (
