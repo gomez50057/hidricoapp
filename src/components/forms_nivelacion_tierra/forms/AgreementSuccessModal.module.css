@@ -27,20 +27,19 @@
   z-index: 10000; 
 }
 
-.styledModal h2 {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
+.styledModal h2,
 .styledModal p {
   text-align: center;
   margin-bottom: 20px;
 }
 
+.containerClose{
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 .closeButton {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   padding: 4px;
