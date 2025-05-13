@@ -24,7 +24,7 @@
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: 1010; 
+  z-index: 10000; 
 }
 
 .styledModal h2 {

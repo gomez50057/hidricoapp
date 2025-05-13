@@ -1,6 +1,5 @@
-// 'use client';
-
-import { React } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import styles from './AgreementSuccessModal.module.css';
@@ -8,7 +7,7 @@ import styles from './AgreementSuccessModal.module.css';
 const AgreementSuccessModal = ({ isOpen, folio, estado, mensaje, labelFolio, labelGuardar, handleClose }) => {
   if (!isOpen) return null;
 
-  return (
+  const modalContent = (
     <div className={styles.overlay}>
       <div className={styles.styledModal}>
         <IconButton
@@ -28,6 +27,9 @@ const AgreementSuccessModal = ({ isOpen, folio, estado, mensaje, labelFolio, lab
       </div>
     </div>
   );
+
+  // Renderiza fuera del flujo del componente padre
+  return ReactDOM.createPortal(modalContent, document.body);
 };
 
 export default AgreementSuccessModal;
