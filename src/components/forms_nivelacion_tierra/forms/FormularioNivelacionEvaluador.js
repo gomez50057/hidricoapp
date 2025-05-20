@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
-import FirmaDigital from './componentsForm/FirmaDigital';
+// import FirmaDigital from './componentsForm/FirmaDigital';
 import styles from './FormNivelacion.module.css';
 import AgreementSuccessModal from './AgreementSuccessModal';
 import { identificacionOpciones, nivelesOpciones, gradoPendienteOpciones, profundidadSueloPedregosidad, resolucionOpciones, tipoSuelo } from '@/utils/utils';
@@ -35,9 +35,10 @@ const FormularioNivelacionEvaluador = () => {
     acreditacion_propiedad: '',
     constancia_curso: '',
     tipo_suelo: '',
+    porcentaje: '',
     resolucion: '',
-    nombre_revisor: '',
-    firma_digital: '',
+    // nombre_revisor: '',
+    // firma_digital: '',
   };
 
   const getCSRFToken = () => {
@@ -102,7 +103,7 @@ const FormularioNivelacionEvaluador = () => {
             <NivelacionDetalle folio={values.nivelacion} />
             <Form className={styles.formWrapper}>
               <h1><span>Cédula</span> de <span className="spanDoarado">evaluación y dictamen</span></h1>
-              
+
               <div className={styles.formGroup}>
                 <h3 className={styles.inputField}>
                   {preSelectedFolio
@@ -217,6 +218,12 @@ const FormularioNivelacionEvaluador = () => {
                 </div>
 
                 <div className={styles.formGroup}>
+                  <label>Procentaje</label>
+                  <Field name="porcentaje" type="number" step="0.01" className={styles.inputField} />                  
+                  <ErrorMessage name="porcentaje" component="div" className={styles.errorMessage} />
+                </div>
+
+                <div className={styles.formGroup}>
                   <label>Resolución</label>
                   <Field as="select" name="resolucion" className={styles.inputField}>
                     <option value="">Seleccione</option>
@@ -227,14 +234,14 @@ const FormularioNivelacionEvaluador = () => {
                   <ErrorMessage name="resolucion" component="div" className={styles.errorMessage} />
                 </div>
 
-                <div className={styles.formGroup}>
+                {/* <div className={styles.formGroup}>
                   <label>Nombre de quien revisó</label>
                   <Field name="nombre_revisor" className={styles.inputField} />
                   <ErrorMessage name="nombre_revisor" component="div" className={styles.errorMessage} />
-                </div>
+                </div> */}
               </div>
 
-              <FirmaDigital setFieldValue={setFieldValue} />
+              {/* <FirmaDigital setFieldValue={setFieldValue} /> */}
 
               <div className={styles.formGroup}>
                 <button type="submit" className={styles.submitButton}>Enviar</button>

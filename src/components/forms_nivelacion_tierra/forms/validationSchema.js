@@ -73,7 +73,18 @@ export const validationSchemaEvaluador = Yup.object({
   acreditacion_propiedad: Yup.string().required('Campo obligatorio'),
   constancia_curso: Yup.string().required('Campo obligatorio'),
   tipo_suelo: Yup.string().required('Campo obligatorio'),
+  porcentaje: Yup.number()
+    .typeError('Debe ser un número')
+    .max(40, 'No puede ser mayor a 40')
+    .test(
+      'maxTwoDecimals',
+      'Sólo hasta 2 decimales',
+      value =>
+        value == null ||
+        /^\d+(\.\d{1,2})?$/.test(value.toString())
+    )
+    .required('Campo obligatorio'),
   resolucion: Yup.string().required('Campo obligatorio'),
-  nombre_revisor: Yup.string().required('Campo obligatorio'),
-  firma_digital: Yup.string().required('Firma requerida'),
+  // nombre_revisor: Yup.string().required('Campo obligatorio'),
+  // firma_digital: Yup.string().required('Firma requerida'),
 });
