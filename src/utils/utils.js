@@ -46,7 +46,14 @@ export const distritosPorModulos = {
     'Bombeo Agricola Teltipan A.C.',
     'Bombeo Cerro Juandho de Teltipán',
     'Potrero Blanco y San Rafael',
-    'Dendho-Cardonal'
+    'Dendho-Cardonal',
+    'Módulo De Riego Potrero Blanco Y San Rafael',
+    'Módulo De Riego Dendho - Cardonal',
+    'Unidad De Riego Tlamaco-Juandh',
+    'Unidad De Riego Mixquiahuala',
+    'Unidad De Riego Tula',
+    'Unidad De Riego El Tumba Tepatepec',
+    'Unidad De Riego Artículo 27'
   ],
 
   'Distrito de Riego 100.Alfajayucan': [
@@ -55,11 +62,13 @@ export const distritosPorModulos = {
     'Usuarios canal Alto Ixmiquilpan A.C.',
     'Usuarios de riego canal Xotho A.C.',
     'Usuarios de riego canal del Centro',
-    'Asociación de usuario del distrito de riego 027 Ixmiquilpan A.C.'
+    'Asociación de usuario del distrito de riego 027 Ixmiquilpan A.C.',
+    'Unidad De Riego Canal Xochitlán'
   ],
 
   'Distrito de Riego 112.Ajacuba': [
-    'Asociación de Usuarios Valle de Ajacuba'
+    'Asociación de Usuarios Valle de Ajacuba',
+    'Sistema De Riego Munitepec, Teltipán Y Tetepango, A.C.'
   ]
 };
 
