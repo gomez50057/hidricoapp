@@ -261,7 +261,7 @@ const CRUDTable = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="table_grid">
-        <Typography variant="h3">Registrados</Typography>
+        <Typography variant="h3">Patrón de Solicitantes</Typography>
         <MaterialReactTable table={table} />
       </div>
 

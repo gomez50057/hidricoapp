@@ -110,8 +110,8 @@ export default function Dashboard() {
                 <div className="icon">
                   <SvgIcon name="acuerdo" />
                 </div>
-                <span className="title">Registro</span>
-                <span className="sub-title"></span>
+                <span className="title">Patrón</span>
+                <span className="sub-title">de solicitantes</span>
               </a>
             </li>
           )}
@@ -123,8 +123,8 @@ export default function Dashboard() {
                 <div className="icon">
                   <SvgIcon name="acuerdo" />
                 </div>
-                <span className="title">Registro</span>
-                <span className="sub-title"></span>
+                <span className="title">Patrón</span>
+                <span className="sub-title">de solicitantes</span>
               </a>
             </li>
           )}

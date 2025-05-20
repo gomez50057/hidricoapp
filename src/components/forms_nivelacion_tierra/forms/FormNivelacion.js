@@ -15,14 +15,14 @@ import 'leaflet/dist/leaflet.css';
 import WarningIcon from '@mui/icons-material/Warning';
 
 import {
-  municipiosDeHidalgo,
+  municipiosDeHidalgoModulos,
   identificacionOpciones,
   identificacionOficialOpciones,
   distritosPorModulos,
   nivelesOpciones,
   gradoPendienteOpciones,
   profundidadSueloOpciones,
-  tipoRevestimientoOpciones,
+  // tipoRevestimientoOpciones,
   gastoCanalesOpciones,
   tipoSeccionOpciones,
   productoSembrados,
@@ -124,7 +124,8 @@ const FormNivelacion = () => {
     firma_digital: '',
   };
 
-  const FILE_SIZE_LIMIT = 10 * 1024 * 1024; // 10 MB en bytes
+  const FILE_SIZE_LIMIT = 10 * 1024 * 1024; // 10MB en bytes
+  const FILE_SIZE_LIMIT2MB = 2 * 1024 * 1024; // 2 MB en bytes
 
   const validationSchema = Yup.object({
     nombre: Yup.string().required('Campo obligatorio'),
@@ -159,15 +160,15 @@ const FormNivelacion = () => {
     identificacion_pdf: Yup.mixed()
       .required('Debe cargar un archivo PDF')
       .test('fileFormat', 'Solo se permite PDF', (value) => value && value.type === 'application/pdf')
-      .test('fileSize', 'El archivo debe ser menor o igual a 10 MB', (value) => value && value.size <= FILE_SIZE_LIMIT),
+      .test('fileSize', 'El archivo debe ser menor o igual a 2 MB', (value) => value && value.size <= FILE_SIZE_LIMIT2MB),
     comprobante_domicilio_pdf: Yup.mixed()
       .required('Debe cargar un archivo PDF')
       .test('fileFormat', 'Solo se permite PDF', (value) => value && value.type === 'application/pdf')
-      .test('fileSize', 'El archivo debe ser menor o igual a 10 MB', (value) => value && value.size <= FILE_SIZE_LIMIT),
+      .test('fileSize', 'El archivo debe ser menor o igual a 2 MB', (value) => value && value.size <= FILE_SIZE_LIMIT2MB),
     vale_riego_reciente_pdf: Yup.mixed()
       .required('Debe cargar un archivo PDF')
       .test('fileFormat', 'Solo se permite PDF', (value) => value && value.type === 'application/pdf')
-      .test('fileSize', 'El archivo debe ser menor o igual a 10 MB', (value) => value && value.size <= FILE_SIZE_LIMIT),
+      .test('fileSize', 'El archivo debe ser menor o igual a 2 MB', (value) => value && value.size <= FILE_SIZE_LIMIT2MB),
     curso_sader: Yup.string().required('Campo obligatorio'),
     // cuando_toma_sader: Yup.string().when('curso_sader', (curso_sader, schema) => {
     //   if (curso_sader === 'no') {
@@ -259,20 +260,20 @@ const FormNivelacion = () => {
                 <h2>Registro de solicitud al componte de <span className="spanvino">nivelación de tierras</span></h2>
               </div>
 
-              <SectionTitle title="Datos Personales" />
+              <SectionTitle title="1.Datos Personales" />
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="nombre">Nombre:</label>
+                  <label htmlFor="nombre">1.1 Nombre:</label>
                   <Field name="nombre" className={styles.inputField} />
                   <ErrorMessage name="nombre" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="apellido_paterno">Apellido Paterno:</label>
+                  <label htmlFor="apellido_paterno">1.2 Apellido Paterno:</label>
                   <Field name="apellido_paterno" className={styles.inputField} />
                   <ErrorMessage name="apellido_paterno" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="apellido_materno">Apellido Materno:</label>
+                  <label htmlFor="apellido_materno">1.3 Apellido Materno:</label>
                   <Field name="apellido_materno" className={styles.inputField} />
                   <ErrorMessage name="apellido_materno" component="div" className={styles.errorMessage} />
                 </div>
@@ -280,7 +281,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="curp">CURP:</label>
+                  <label htmlFor="curp">1.4 CURP:</label>
                   <Field name="curp" className={styles.inputField} />
                   <ErrorMessage name="curp" component="div" className={styles.errorMessage} />
                 </div>
@@ -288,12 +289,12 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="domicilio">Domicilio:</label>
+                  <label htmlFor="domicilio">1.5 Domicilio:</label>
                   <Field name="domicilio" className={styles.inputField} />
                   <ErrorMessage name="domicilio" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="identificacion">Identificación oficial:</label>
+                  <label htmlFor="identificacion">1.6 Identificación oficial:</label>
                   <Field as="select" name="identificacion" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOficialOpciones.map((opcion) => (
@@ -305,19 +306,19 @@ const FormNivelacion = () => {
                   <ErrorMessage name="identificacion" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="telefono">No. Telefónico:</label>
+                  <label htmlFor="telefono">1.7 No. Telefónico Celular:</label>
                   <Field name="telefono" className={styles.inputField} />
                   <ErrorMessage name="telefono" component="div" className={styles.errorMessage} />
                 </div>
               </div>
 
-              <SectionTitle title="Datos de la parcela" />
+              <SectionTitle title="2.Datos de la parcela" />
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="municipio">Municipio:</label>
+                  <label htmlFor="municipio">2.1 Municipio:</label>
                   <Field as="select" name="municipio" className={styles.inputField}>
                     <option value="">Seleccione</option>
-                    {municipiosDeHidalgo.map((mun) => (
+                    {municipiosDeHidalgoModulos.map((mun) => (
                       <option key={mun} value={mun}>
                         {mun}
                       </option>
@@ -326,7 +327,7 @@ const FormNivelacion = () => {
                   <ErrorMessage name="municipio" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="localidad">Localidad:</label>
+                  <label htmlFor="localidad">2.2 Localidad:</label>
                   <Field name="localidad" className={styles.inputField} />
                   <ErrorMessage name="localidad" component="div" className={styles.errorMessage} />
                 </div>
@@ -334,7 +335,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="distrito_riego">Distrito de Riego:</label>
+                  <label htmlFor="distrito_riego">2.3 Distrito de Riego:</label>
                   <Field as="select" name="distrito_riego" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {Object.keys(distritosPorModulos).map((distrito) => (
@@ -347,7 +348,7 @@ const FormNivelacion = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="modulo_riego">Módulo de Riego:</label>
+                  <label htmlFor="modulo_riego">2.4 Módulo de Riego:</label>
                   <Field as="select" name="modulo_riego" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {modulosFiltrados.map((modulo) => (
@@ -362,17 +363,17 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="superficie_parcela">Superficie de parcela (ha):</label>
+                  <label htmlFor="superficie_parcela">2.5 Superficie de parcela (ha):</label>
                   <Field name="superficie_parcela" className={styles.inputField} />
                   <ErrorMessage name="superficie_parcela" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="cuenta_conagua">No. cuenta CONAGUA:</label>
+                  <label htmlFor="cuenta_conagua">2.6 No. cuenta CONAGUA:</label>
                   <Field name="cuenta_conagua" className={styles.inputField} />
                   <ErrorMessage name="cuenta_conagua" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tiempo_promedio_riego">Tiempo promedio de riego (parcela):</label>
+                  <label htmlFor="tiempo_promedio_riego">2.7 Tiempo promedio de riego (parcela):</label>
                   <Field name="tiempo_promedio_riego" className={styles.inputField} />
                   <ErrorMessage name="tiempo_promedio_riego" component="div" className={styles.errorMessage} />
                 </div>
@@ -380,12 +381,12 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label>Latitud</label>
+                  <label>2.8 Latitud</label>
                   <Field name="latitud" type="text" className={styles.inputField} />
                   <ErrorMessage name="latitud" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label>Longitud</label>
+                  <label>2.9 Longitud</label>
                   <Field name="longitud" type="text" className={styles.inputField} />
                   <ErrorMessage name="longitud" component="div" className={styles.errorMessage} />
                 </div>
@@ -399,7 +400,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="grado_pendiente">Grado de Pendiente:</label>
+                  <label htmlFor="grado_pendiente">2.10 Grado de Pendiente:</label>
                   <Field as="select" name="grado_pendiente" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {gradoPendienteOpciones.map((opcion) => (
@@ -411,7 +412,7 @@ const FormNivelacion = () => {
                   <ErrorMessage name="grado_pendiente" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="pedregosidad">Pedregosidad:</label>
+                  <label htmlFor="pedregosidad">2.11 Pedregosidad:</label>
                   <Field as="select" name="pedregosidad" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {nivelesOpciones.map((opcion) => (
@@ -426,7 +427,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="profundidad_suelo">Profundidad del suelo:</label>
+                  <label htmlFor="profundidad_suelo">2.12 Profundidad del suelo:</label>
                   <Field as="select" name="profundidad_suelo" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {profundidadSueloOpciones.map((opcion) => (
@@ -438,7 +439,7 @@ const FormNivelacion = () => {
                   <ErrorMessage name="profundidad_suelo" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tipo_revestimiento">Canaleta revestida:</label>
+                  <label htmlFor="tipo_revestimiento">2.13 Canaleta revestida:</label>
                   <Field as="select" name="tipo_revestimiento" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOpciones.map((opcion) => (
@@ -453,12 +454,12 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tamano_canaleta_ancho">Ancho de la canaleta de riego en cm (zanja):</label>
+                  <label htmlFor="tamano_canaleta_ancho">2.14 Ancho de la canaleta de riego en cm (zanja):</label>
                   <Field name="tamano_canaleta_ancho" type="number" min="0" className={styles.inputField} />
                   <ErrorMessage name="tamano_canaleta_ancho" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tamano_canaleta_alto">Alto de la canaleta de riego en cm (zanja):</label>
+                  <label htmlFor="tamano_canaleta_alto">2.15 Alto de la canaleta de riego en cm (zanja):</label>
                   <Field name="tamano_canaleta_alto" type="number" min="0" className={styles.inputField} />
                   <ErrorMessage name="tamano_canaleta_alto" component="div" className={styles.errorMessage} />
                 </div>
@@ -466,7 +467,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="gasto_canales">Gasto en canales (lps):</label>
+                  <label htmlFor="gasto_canales">2.16 Gasto en canales (lps):</label>
                   <Field as="select" name="gasto_canales" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {gastoCanalesOpciones.map((opcion) => (
@@ -478,12 +479,12 @@ const FormNivelacion = () => {
                   <ErrorMessage name="gasto_canales" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="distancia_canaleta">Distancia de parcela a la canaleta revestida (m):</label>
+                  <label htmlFor="distancia_canaleta">2.17 Distancia de parcela a la canaleta revestida (m):</label>
                   <Field name="distancia_canaleta" type="number" min="0" className={styles.inputField} />
                   <ErrorMessage name="distancia_canaleta" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="tipo_seccion">Tipo de sección de la canaleta:</label>
+                  <label htmlFor="tipo_seccion">2.18 Tipo de sección de la canaleta:</label>
                   <Field as="select" name="tipo_seccion" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {tipoSeccionOpciones.map((opcion) => (
@@ -497,7 +498,7 @@ const FormNivelacion = () => {
               </div>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="ha_nivelado">¿Ha realizado nivelación de tierra anteriormente?</label>
+                  <label htmlFor="ha_nivelado">2.19 ¿Ha realizado nivelación de tierra anteriormente?</label>
                   <Field as="select" name="ha_nivelado" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOpciones.map((opcion) => (
@@ -510,7 +511,7 @@ const FormNivelacion = () => {
                 </div>
                 {values.ha_nivelado === 'si' && (
                   <div className={styles.formGroup}>
-                    <label htmlFor="anio_nivelacion">¿En qué año?</label>
+                    <label htmlFor="anio_nivelacion">2.19.1 ¿En qué año?</label>
                     <Field as="select" name="anio_nivelacion" className={styles.inputField}>
                       <option value="">Seleccione</option>
                       {Array.from({ length: 2025 - 1980 + 1 }, (_, i) => 1980 + i).map((year) => (
@@ -523,7 +524,7 @@ const FormNivelacion = () => {
                   </div>
                 )}
                 <div className={styles.formGroup}>
-                  <label htmlFor="problemas_drenaje">¿Su parcela presenta problemas de drenaje y/o salinidad?</label>
+                  <label htmlFor="problemas_drenaje">2.20 ¿Su parcela presenta problemas de drenaje y/o salinidad?</label>
                   <Field as="select" name="problemas_drenaje" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOpciones.map((opcion) => (
@@ -538,7 +539,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="cultivos_dominantes">Cultivos dominantes en la parcela:</label>
+                  <label htmlFor="cultivos_dominantes">2.21 Cultivos dominantes en la parcela:</label>
                   <Field as="select" name="cultivos_dominantes" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {productoSembrados.map((cultivo) => (
@@ -550,7 +551,7 @@ const FormNivelacion = () => {
                   <ErrorMessage name="cultivos_dominantes" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="cultivo_actual">¿Cultivo actual?</label>
+                  <label htmlFor="cultivo_actual">2.22 ¿Cultivo actual?</label>
                   <Field as="select" name="cultivo_actual" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {productoSembrados.map((cultivo) => (
@@ -564,7 +565,7 @@ const FormNivelacion = () => {
                 {['Alfalfa', 'Otros cultivos perennes'].includes(values.cultivo_actual) && (
                   <div className={styles.formGroup}>
                     <label htmlFor="perene_roturacion">
-                      ¿Va a realizar trabajos de roturación (cambio del cultivo) en el presente año?
+                      2.22.1 ¿Va a realizar trabajos de roturación (cambio del cultivo) en el presente año?
                     </label>
                     <Field as="select" name="perene_roturacion" className={styles.inputField}>
                       <option value="">Seleccione</option>
@@ -579,7 +580,7 @@ const FormNivelacion = () => {
                 )}
                 {cultivosAnuales.includes(values.cultivo_actual) && (
                   <div className={styles.formGroup}>
-                    <label htmlFor="fecha_libre_parcela">¿En qué fecha estaría libre la parcela?</label>
+                    <label htmlFor="fecha_libre_parcela">2.22.1 ¿En qué fecha estaría libre la parcela?</label>
                     <Field type="date" name="fecha_libre_parcela" className={styles.inputField} />
                     <ErrorMessage name="fecha_libre_parcela" component="div" className={styles.errorMessage} />
                   </div>
@@ -588,7 +589,7 @@ const FormNivelacion = () => {
 
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="acreditacion_propiedad">¿Acredita la legal posesión o propiedad de la tierra?:</label>
+                  <label htmlFor="acreditacion_propiedad">2.23 ¿Acredita la legal posesión o propiedad de la tierra?:</label>
                   <Field as="select" name="acreditacion_propiedad" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOpciones.map((opcion) => (
@@ -600,7 +601,7 @@ const FormNivelacion = () => {
                   <ErrorMessage name="acreditacion_propiedad" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
-                  <label htmlFor="documento_presentado">Documento que presenta:</label>
+                  <label htmlFor="documento_presentado">2.24 Documento que presenta:</label>
                   <Field as="select" name="documento_presentado" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {documentosPresentados.map((doc) => (
@@ -613,11 +614,11 @@ const FormNivelacion = () => {
                 </div>
               </div>
 
-              <SectionTitle title="Carga de Documento y Firma" />
+              <SectionTitle title="3.Carga de Documento y Firma" />
               <p>Solo se permiten archivos en formato PDF. Además, el tamaño de cada archivo adjunto no debe exceder los 10 MB por envío. Asegúrate de que los documentos cumplan con estos requisitos para evitar problemas al cargar el formulario. Si tus archivos superan este límite, te recomendamos reducir el tamaño de tus archivos antes de adjuntarlos</p>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="legal_propiedad_pdf">Certeza jurídica de la perecerla:</label>
+                  <label htmlFor="legal_propiedad_pdf">3.1 Certeza jurídica de la parcela:</label>
                   <input
                     id="legal_propiedad_pdf"
                     name="legal_propiedad_pdf"
@@ -632,7 +633,7 @@ const FormNivelacion = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="identificacion_pdf">Identificación oficial:</label>
+                  <label htmlFor="identificacion_pdf">3.2 Identificación oficial:</label>
                   <input
                     id="identificacion_pdf"
                     name="identificacion_pdf"
@@ -647,7 +648,7 @@ const FormNivelacion = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="comprobante_domicilio_pdf">Comprobante de domicilio:</label>
+                  <label htmlFor="comprobante_domicilio_pdf">3.3 Comprobante de domicilio:</label>
                   <input
                     id="comprobante_domicilio_pdf"
                     name="comprobante_domicilio_pdf"
@@ -662,7 +663,7 @@ const FormNivelacion = () => {
                 </div>
 
                 <div className={styles.formGroup}>
-                  <label htmlFor="vale_riego_reciente_pdf">Vale de riego reciente:</label>
+                  <label htmlFor="vale_riego_reciente_pdf">3.4 Vale de riego reciente:</label>
                   <input
                     id="vale_riego_reciente_pdf"
                     name="vale_riego_reciente_pdf"
@@ -678,7 +679,7 @@ const FormNivelacion = () => {
               </div>
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
-                  <label htmlFor="curso_sader">¿Cuenta con curso de capacitación de SADER?</label>
+                  <label htmlFor="curso_sader">3.5 ¿Cuenta con curso de capacitación de SADER?</label>
                   <Field as="select" name="curso_sader" className={styles.inputField}>
                     <option value="">Seleccione</option>
                     {identificacionOpciones.map((opcion) => (
@@ -707,7 +708,7 @@ const FormNivelacion = () => {
 
                 {values.curso_sader === 'si' && (
                   <div className={styles.formGroup}>
-                    <label htmlFor="constancia_pdf">Cargar constancia(solo PDF):</label>
+                    <label htmlFor="constancia_pdf">3.5.1 Cargar constancia(solo PDF):</label>
                     <input
                       id="constancia_pdf"
                       name="constancia_pdf"

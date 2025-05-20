@@ -29,7 +29,7 @@ const FirmaDigital = ({ setFieldValue }) => {
   return (
     <div className={styles.signatureWrapper}>
       <div className={styles.containerSignatureWrapper}>
-        <label>Firma Digital:</label>
+        <label>3.6 Firma Digital:</label>
         <SignatureCanvas
           penColor="black"
           canvasProps={{ className: styles.signatureCanvas }}

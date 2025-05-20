@@ -181,7 +181,6 @@
   flex-direction: column;
 } */
 
-
 .sidebar .list .list-item .list-item-link .title {
   padding-left: 10px;
   height: 60px;
@@ -194,13 +193,10 @@
   position: absolute;
   top: 40px;
   left: 50px;
-  color: var(--blanco);
   padding-left: 10px;
   font-size: 0.5rem;
   z-index: 1000;
 }
-
-
 
 .sidebar-card {
   position: fixed;
