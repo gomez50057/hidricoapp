@@ -134,8 +134,8 @@ const CtrlScrollZoomMessage = () => {
 const MapaUbicacion = ({ setFieldValue }) => {
   return (
     <MapContainer
-      center={[20.44819465937593, -98.41534285830343]}
-      zoom={8}
+      center={[20.23300374867549, -99.21572109443447]}
+      zoom={9}
       attributionControl={false}
       minZoom={8}
       maxZoom={20}
