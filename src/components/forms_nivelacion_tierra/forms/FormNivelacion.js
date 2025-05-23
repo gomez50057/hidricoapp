@@ -23,7 +23,7 @@ import {
   gradoPendienteOpciones,
   profundidadSueloOpciones,
   // tipoRevestimientoOpciones,
-  gastoCanalesOpciones,
+  // gastoCanalesOpciones,
   tipoSeccionOpciones,
   productoSembrados,
   cultivosAnuales,
@@ -120,6 +120,7 @@ const FormNivelacion = () => {
     vale_riego_reciente_pdf: null,
     curso_sader: '',
     constancia_pdf: null,
+    observaciones: '',
     // cuando_toma_sader: '',
     firma_digital: '',
   };
@@ -150,7 +151,19 @@ const FormNivelacion = () => {
       .required('Campo obligatorio'),
     tamano_canaleta_ancho: Yup.number().min(0).required('Campo obligatorio'),
     tamano_canaleta_alto: Yup.number().min(0).required('Campo obligatorio'),
-    gasto_canales: Yup.string().required('Campo obligatorio'),
+    gasto_canales: Yup.number()
+      .typeError('Debe ser un número')
+      .min(50, 'Debe ser mayor o igual a 50')
+      .max(20000, 'No puede ser mayor a 20,000')
+      .test(
+        'maxTwoDecimals',
+        'Sólo hasta 2 decimales',
+        value =>
+          value == null ||
+          /^\d+(\.\d{1,2})?$/.test(value.toString())
+      )
+      .required('Campo obligatorio'),
+    // gasto_canales: Yup.string().required('Campo obligatorio'),
     distancia_canaleta: Yup.number().min(0).required('Campo obligatorio'),
     tipo_seccion: Yup.string().required('Campo obligatorio'),
     legal_propiedad_pdf: Yup.mixed()
@@ -186,6 +199,9 @@ const FormNivelacion = () => {
           .test('fileFormat', 'Solo se permite PDF', (value) => value && value.type === 'application/pdf'),
       otherwise: (schema) => schema.notRequired(),
     }),
+    observaciones: Yup.string()
+      .max(250, 'No puede tener más de 250 caracteres')
+      .required('Campo obligatorio'),
     firma_digital: Yup.string().required('Firma requerida'),
   });
 
@@ -468,14 +484,7 @@ const FormNivelacion = () => {
               <div className={styles.formRow}>
                 <div className={styles.formGroup}>
                   <label htmlFor="gasto_canales">2.16 Gasto en canales (lps):</label>
-                  <Field as="select" name="gasto_canales" className={styles.inputField}>
-                    <option value="">Seleccione</option>
-                    {gastoCanalesOpciones.map((opcion) => (
-                      <option key={opcion.value} value={opcion.value}>
-                        {opcion.label}
-                      </option>
-                    ))}
-                  </Field>
+                  <Field name="gasto_canales" type="number" step="0.01" className={styles.inputField} />
                   <ErrorMessage name="gasto_canales" component="div" className={styles.errorMessage} />
                 </div>
                 <div className={styles.formGroup}>
@@ -723,7 +732,16 @@ const FormNivelacion = () => {
                   </div>
                 )}
               </div>
-              <FirmaDigital setFieldValue={setFieldValue} />
+              <div className={styles.formRow}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="observaciones">3.6 Observaciones (máximo 250 caracteres):</label>
+                  <Field as="textarea" name="observaciones" maxLength="250" className={styles.inputField} rows="4" />
+                  <ErrorMessage name="observaciones" component="div" className={styles.errorMessage} />
+                </div>
+              </div>
+              <div className={styles.formRow}>
+                <FirmaDigital setFieldValue={setFieldValue} />
+              </div>
               <p className={styles.alerta}>
                 <WarningIcon style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                 Importante: La presentación de esta solicitud. no otorga el derecho a ser autorizada, ésta debe ser dictaminada previamente por el Comité Técnico, con base al procedimiento de selección establecido en los Lineamientos Técnicos.

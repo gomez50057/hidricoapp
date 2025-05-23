@@ -63,7 +63,8 @@ export const distritosPorModulos = {
     'Usuarios de riego canal Xotho A.C.',
     'Usuarios de riego canal del Centro',
     'Asociación de usuario del distrito de riego 027 Ixmiquilpan A.C.',
-    'Unidad De Riego Canal Xochitlán'
+    'Unidad De Riego Canal Xochitlán',
+    'Módulo El Xotho km 14 A. C.'
   ],
 
   'Distrito de Riego 112.Ajacuba': [
