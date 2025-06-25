@@ -1,19 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-  createMRTColumnHelper,
-} from 'material-react-table';
-import {
-  createTheme,
-  ThemeProvider,
-  CssBaseline,
-  Typography,
-  Button,
-  Box,
-} from '@mui/material';
+import { MaterialReactTable, useMaterialReactTable, createMRTColumnHelper, } from 'material-react-table';
+import { createTheme, ThemeProvider, CssBaseline, Typography, Button, Box, } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import Tooltip from '@mui/material/Tooltip';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -27,6 +16,17 @@ const CRUDTable = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [modalMode, setModalMode] = useState('edit');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setLoading(false);
+      return;
+    }
+    const timer = setTimeout(() => setLoading(false), 10000);
+    return () => clearTimeout(timer);
+  }, [data]);
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -138,6 +138,54 @@ const CRUDTable = () => {
     filename: 'acuerdos_export',
   });
 
+  const buildCsvRow = (row) => ({
+    'Nombre del capturista': row.created_by || '',
+    'Fecha de captura': row.fecha || '',
+    'Folio de captura': row.folio || '',
+    '1.1 Nombre': row.nombre || '',
+    '1.2 Apellido Paterno': row.apellido_paterno || '',
+    '1.3 Apellido Materno': row.apellido_materno || '',
+    '1.4 CURP': row.curp || '',
+    '1.5 Domicilio': row.domicilio || '',
+    '1.6 Identificación oficial': row.identificacion || '',
+    '1.7 No. Telefónico Celular': row.telefono || '',
+    '2.1 Municipio': row.municipio || '',
+    '2.2 Localidad': row.localidad || '',
+    '2.3 Distrito de Riego': row.distrito_riego || '',
+    '2.4 Módulo de Riego': row.modulo_riego || '',
+    '2.5 Superficie de parcela (ha)': row.superficie_parcela || '',
+    '2.6 No. cuenta CONAGUA': row.cuenta_conagua || '',
+    '2.7 Tiempo promedio de riego (parcela)': row.tiempo_promedio_riego || '',
+    '2.8 Latitud': row.latitud || '',
+    '2.9 Longitud': row.longitud || '',
+    '2.10 Grado de Pendiente': row.grado_pendiente || '',
+    '2.11 Pedregosidad': row.pedregosidad || '',
+    '2.12 Profundidad del suelo': row.profundidad_suelo || '',
+    '2.13 Canaleta revestida': row.tipo_revestimiento || '',
+    '2.14 Ancho de la canaleta de riego en cm (zanja)': row.tamano_canaleta_ancho || '',
+    '2.15 Alto de la canaleta de riego en cm (zanja)': row.tamano_canaleta_alto || '',
+    '2.16 Gasto en canales (lps)': row.gasto_canales || '',
+    '2.17 Distancia de parcela a la canaleta revestida (m)': row.distancia_canaleta || '',
+    '2.18 Tipo de sección de la canaleta': row.tipo_seccion || '',
+    '2.19 ¿Ha realizado nivelación de tierra anteriormente?': row.ha_nivelado || '',
+    '2.19.1 ¿En qué año?': row.anio_nivelacion || '',
+    '2.20 ¿Su parcela presenta problemas de drenaje y/o salinidad?': row.problemas_drenaje || '',
+    '2.21 Cultivos dominantes en la parcela': row.cultivos_dominantes || '',
+    '2.22 ¿Cultivo actual?': row.cultivo_actual || '',
+    '2.22.1 ¿Va a realizar trabajos de roturación (cambio del cultivo) en el presente año?': row.perene_roturacion || '',
+    '2.22.1 ¿En qué fecha estaría libre la parcela?': row.fecha_libre_parcela || '',
+    '2.23 ¿Acredita la legal posesión o propiedad de la tierra?': row.acreditacion_propiedad || '',
+    '2.24 Documento que presenta': row.documento_presentado || '',
+    '3.1 Certeza jurídica de la parcela': row.legal_propiedad_pdf || '',
+    '3.2 Identificación oficial': row.identificacion_pdf || '',
+    '3.3 Comprobante de domicilio': row.comprobante_domicilio_pdf || '',
+    '3.4 Vale de riego reciente': row.vale_riego_reciente_pdf || '',
+    '3.5 ¿Cuenta con curso de capacitación de SADER?': row.curso_sader || '',
+    '3.5.1 Cargar constancia(solo PDF)': row.constancia_pdf || '',
+    // 'Resolucion': row.resolucion || '',
+    'Observaciones': row.observaciones || '',
+  });
+
   const estatusMap = {
     sin_avance: 'Sin Avance',
     en_proceso: 'En Proceso',
@@ -182,13 +230,13 @@ const CRUDTable = () => {
   };
 
   const handleExportRows = (rows) => {
-    const rowData = rows.map((row) => sanitizeForCsv(row.original));
+    const rowData = rows.map((row) => buildCsvRow(row.original));
     const csv = generateCsv(csvConfig)(rowData);
     download(csvConfig)(csv);
   };
 
   const handleExportAllData = () => {
-    const cleanData = data.map(sanitizeForCsv);
+    const cleanData = data.map(buildCsvRow);
     const csv = generateCsv(csvConfig)(cleanData);
     download(csvConfig)(csv);
   };
@@ -235,7 +283,7 @@ const CRUDTable = () => {
     },
     localization: {
       actions: 'Acciones',
-      noRecordsToDisplay: 'No se encontraron registros',
+      noRecordsToDisplay: loading ? 'Cargando y buscando datos...' : 'No se encontraron registros',
       showHideColumns: 'Ver columnas',
       search: 'Buscar',
       clearSearch: 'Limpiar',
@@ -261,7 +309,7 @@ const CRUDTable = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="table_grid">
-        <Typography variant="h3">Patrón de Solicitantes</Typography>
+        <Typography variant="h3">Padron de Solicitantes</Typography>
         <MaterialReactTable table={table} />
       </div>
 

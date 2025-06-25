@@ -25,6 +25,16 @@ const TablePresidentes = () => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [modalMode, setModalMode] = useState('edit');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (data.length > 0) {
+      setLoading(false);
+      return;
+    }
+    const timer = setTimeout(() => setLoading(false), 10000);
+    return () => clearTimeout(timer);
+  }, [data]);
 
   const fetchData = useCallback(async () => {
     try {
@@ -222,7 +232,7 @@ const TablePresidentes = () => {
     },
     localization: {
       actions: 'Acciones',
-      noRecordsToDisplay: 'No se encontraron registros',
+      noRecordsToDisplay: loading ? 'Cargando y buscando datos...' : 'No se encontraron registros',
       showHideColumns: 'Ver columnas',
       search: 'Buscar',
       clearSearch: 'Limpiar',
@@ -248,7 +258,7 @@ const TablePresidentes = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="table_grid">
-        <Typography variant="h3">Patrón de Solicitantes</Typography>
+        <Typography variant="h3">Padron de Solicitantes</Typography>
         <MaterialReactTable table={table} />
       </div>
 
