@@ -24,19 +24,26 @@ export default function LoginPage() {
         { withCredentials: true }
       );
 
-      if (status === 200 && data.status === 'ok') {
-        const role = data.group;
-        const name = data.username || username;
-
-        localStorage.setItem('userRole', role);
-        localStorage.setItem('userName', name);
-        localStorage.setItem('isLoggedIn', 'true');
-
-        router.replace('/dashboard');
-      } else {
+      // Si no es 200 o la API devuelve status distinto de 'ok'
+      if (status !== 200 || data.status !== 'ok') {
         throw new Error(data.detail || 'Error en inicio de sesión');
       }
+
+      // Comprueba que el usuario tenga grupo válido
+      const group = data.group;
+      if (!group || group === 'sin grupo') {
+        throw new Error('No tienes asignado ningún grupo');
+      }
+
+      // Si todo está bien, guardamos y redirigimos
+      const name = data.username || username;
+      localStorage.setItem('userRole', group);
+      localStorage.setItem('userName', name);
+      localStorage.setItem('isLoggedIn', 'true');
+      router.replace('/dashboard');
+
     } catch (e) {
+      // Mostrar detalle de error si existe, si no, el mensaje genérico
       setErr(e.response?.data?.detail || e.message);
     }
   };

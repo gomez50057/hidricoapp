@@ -99,7 +99,7 @@ const CRUDTable = () => {
         const { id, folio, resolucion } = row.original;
         const userRole = localStorage.getItem('userRole');
         const canEvaluate = userRole === '2b';
-        const canView = userRole === '2b' || userRole === 'visualizador';
+        const canView = userRole === '2b' || userRole === 'visualizador' || userRole === '3c';
 
         return (
           <Box display="flex" gap={1} className="Acciones-con">

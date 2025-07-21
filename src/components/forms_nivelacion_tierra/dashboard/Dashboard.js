@@ -102,7 +102,7 @@ export default function Dashboard() {
               </a>
             </li>
           )}
-          {(userRole === '2b' || userRole === 'visualizador') && (
+          {(userRole === '2b' || userRole === 'visualizador' || userRole === '3c') && (
             <li className="list-item" data-component="tableEvaluar" onClick={() => handleMenuClick('tableEvaluar')}>
               <b></b>
               <b></b>
