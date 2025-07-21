@@ -27,6 +27,7 @@ const TablePresidentes = () => {
   const [modalMode, setModalMode] = useState('edit');
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     if (data.length > 0) {
       setLoading(false);

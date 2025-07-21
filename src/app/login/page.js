@@ -18,7 +18,8 @@ export default function LoginPage() {
     setErr('');
 
     try {
-      const { data, status } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/inicio-sesion/`,
+      const { data, status } = await axios.post(
+        '/inicio-sesion/',
         { username, password },
         { withCredentials: true }
       );

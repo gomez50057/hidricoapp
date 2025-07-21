@@ -46,7 +46,7 @@ const CRUDTable = () => {
 
   // Actualizamos handleAction para recibir el folio y, si es evaluador, lo guardamos en localStorage.
   const handleAction = (mode, projectId, projectFolio) => {
-    if (mode === 'evaluador') {
+    if (mode === 'evaluador' || mode === 'view') {
       localStorage.setItem('selectedFolio', projectFolio);
     }
     setSelectedProjectId(projectId);
@@ -113,6 +113,15 @@ const CRUDTable = () => {
                 <CheckCircleIcon color="success" />
               </Tooltip>
             )}
+
+            <Button
+              variant="outlined"
+              className="crud-button"
+              onClick={() => handleAction('view', id, folio)}
+            >
+              Consultar
+            </Button>
+
 
             {(resolucion === 'Positiva' || resolucion === 'Negativa') && (
               <Button
