@@ -97,39 +97,35 @@ const CRUDTable = () => {
       enableColumnPinning: true,
       Cell: ({ row }) => {
         const { id, folio, resolucion } = row.original;
+        const userRole = localStorage.getItem('userRole');
+        const canEvaluate = userRole === '2b';
+        const canView = userRole === '2b' || userRole === 'visualizador';
 
         return (
           <Box display="flex" gap={1} className="Acciones-con">
-            {resolucion === 'Registrada' ? (
-              <Button
-                variant="outlined"
-                className="crud-button"
-                onClick={() => handleAction('evaluador', id, folio)}
-              >
-                Evaluar
-              </Button>
-            ) : (
-              <Tooltip title={`Ya revisado: ${resolucion}`}>
-                <CheckCircleIcon color="success" />
-              </Tooltip>
+            {canEvaluate && (
+              resolucion === 'Registrada' ? (
+                <Button
+                  variant="outlined"
+                  className="crud-button"
+                  onClick={() => handleAction('evaluador', id, folio)}
+                >
+                  Evaluar
+                </Button>
+              ) : (
+                <Tooltip title={`Ya revisado: ${resolucion}`}>
+                  <CheckCircleIcon color="success" />
+                </Tooltip>
+              )
             )}
 
-            <Button
-              variant="outlined"
-              className="crud-button"
-              onClick={() => handleAction('view', id, folio)}
-            >
-              Consultar
-            </Button>
-
-
-            {(resolucion === 'Positiva' || resolucion === 'Negativa') && (
+            {canView && (
               <Button
                 variant="outlined"
                 className="crud-button"
-                onClick={() => window.open('/planhidrico/report', '_blank')}
+                onClick={() => handleAction('view', id, folio)}
               >
-                Reporte
+                Consultar
               </Button>
             )}
           </Box>

@@ -102,7 +102,7 @@ export default function Dashboard() {
               </a>
             </li>
           )}
-          {userRole === '2b' && (
+          {(userRole === '2b' || userRole === 'visualizador') && (
             <li className="list-item" data-component="tableEvaluar" onClick={() => handleMenuClick('tableEvaluar')}>
               <b></b>
               <b></b>
@@ -116,7 +116,7 @@ export default function Dashboard() {
             </li>
           )}
           {userRole === '2a' && (
-            <li className="list-item" data-component="tablePresidentes" onClick={() => handleMenuClick('tablePresidentes')}            >
+            <li className="list-item" data-component="tablePresidentes" onClick={() => handleMenuClick('tablePresidentes')}>
               <b></b>
               <b></b>
               <a href="#" className="list-item-link">
