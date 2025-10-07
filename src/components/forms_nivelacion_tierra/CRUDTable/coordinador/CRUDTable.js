@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MaterialReactTable, useMaterialReactTable, createMRTColumnHelper, } from 'material-react-table';
 import { createTheme, ThemeProvider, CssBaseline, Typography, Button, Box, } from '@mui/material';
+import PrintIcon from '@mui/icons-material/Print';
+
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import Tooltip from '@mui/material/Tooltip';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -53,6 +55,14 @@ const CRUDTable = () => {
     setModalMode(mode);
     setOpenModal(true);
   };
+
+  const handlePrint = (projectFolio) => {
+    // reutilizamos la misma mecánica de folio que ya usas
+    localStorage.setItem('selectedFolio', projectFolio);
+    // abre la página de reporte (ajústala a tu routing real)  
+    window.open(`/planhidrico/report/${encodeURIComponent(projectFolio)}?autoprint=1`, '_blank', 'noopener,noreferrer');
+  };
+
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -117,6 +127,17 @@ const CRUDTable = () => {
                   <CheckCircleIcon color="success" />
                 </Tooltip>
               )
+            )}
+
+            {canEvaluate && (
+              <Button
+                variant="outlined"
+                className="crud-button"
+                startIcon={<PrintIcon />}
+                onClick={() => handlePrint(folio)}
+              >
+                Imprimir
+              </Button>
             )}
 
             {canView && (
